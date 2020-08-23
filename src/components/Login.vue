@@ -79,7 +79,7 @@
 
 <style scoped lang="less">
   .login_contanier {
-    background: pink;
+    background: #d8a18d;
     height: 100%;
   }
 
