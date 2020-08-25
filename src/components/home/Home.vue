@@ -64,7 +64,8 @@
           '102':'el-icon-s-order',
           '145':'el-icon-s-marketing',
         },
-        isCollapse:true
+        isCollapse:true,
+        nowpath:''
       }
     },
     created() {
@@ -88,10 +89,12 @@
         this.MenuList = res.data
         // console.log(res);
       },
+
     },
+
     computed: {
       getPath(){
-        let a = this.$route.path.slice(1) 
+        let a = this.$route.path.slice(1)
         // a == 'welcome' ? a= 'users' : a = a
         return a
       }

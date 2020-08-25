@@ -26,13 +26,14 @@
             <el-switch v-model="scope.row.mg_state" @change="statusChange(scope.row)"></el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
             <div>
               <el-button type="primary" icon="el-icon-edit" size="mini" @click="findUserById(scope.row.id)"></el-button>
               <el-button type="danger" icon="el-icon-delete" size="mini" @click="delUser(scope.row.id)"></el-button>
               <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">
-                <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+                <el-button type="warning" icon="el-icon-setting" size="mini"
+                @click="showSetRoleDialog(scope.row)"></el-button>
               </el-tooltip>
 
             </div>
@@ -91,13 +92,32 @@
       </span>
     </el-dialog>
 
+    <el-dialog
+            title="分配角色"
+            :visible.sync="setRoleDialog">
+      <p>用户名：{{userInfo.username}}</p>
+      <p>当前角色:{{userInfo.role_name}}</p>
+       <el-select v-model="roleValue" placeholder="请选择">
+        <el-option
+          v-for="item in roleList"
+          :key="item.id"
+          :label="item.roleName"
+          :value="item.id">
+    </el-option>
+  </el-select>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="setRoleDialog = false">取 消</el-button>
+    <el-button type="primary" @click="updateRole">确 定</el-button>
+  </span>
+    </el-dialog>
 
   </div>
 </template>
 
 <script>
-  import Breadcrumb from '../common/Breadcrumb'
+    import  Breadcrumb from '../common/Breadcrumb'
   export default {
+
     data() {
       let checkEmail = (rules, vaule, cb) => {
         let regEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
@@ -204,7 +224,11 @@
               trigger: 'blur'
             }
           ]
-        }
+        },
+        setRoleDialog:false,
+        roleList:[],
+        userInfo:{},
+        roleValue:''
 
       }
     },
@@ -318,6 +342,28 @@
         }).catch(() =>{
           this.$message.info('已经取消删除用户')
         })
+      },
+      // 分配用户角色弹窗
+      async showSetRoleDialog(user){
+        this.setRoleDialog = true
+        this.userInfo = user
+
+        let {data:res} = await this.$http.get('roles')
+        if(res.meta.status !==200){
+          this.$message.error('获取角色列表失败')
+           this.setRoleDialog = false
+          return }
+        this.roleList = res.data
+      },
+      async updateRole(){
+        let {data:res} = await this.$http.put(`users/${this.userInfo.id}/role`,{rid:this.roleValue})
+        if(res.meta.status !==200){return this.$message.error('角色分配失败')}
+
+        this.userInfo ={},
+        this.roleValue=""
+        this.getUserList()
+        this.setRoleDialog = false
+        this.$message.success('分配角色成功')
       }
     },
   }

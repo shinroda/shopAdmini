@@ -7,6 +7,8 @@ const Welcome = ()=> import ('../components/home/Welcome')
 
 const User = ()=> import ('../components/user/User')
 
+const Rights = ()=> import ('../components/power/Rights')
+const Roles = ()=> import('../components/power/Roles')
 
 Vue.use(VueRouter)
 
@@ -19,7 +21,8 @@ const routes = [
     redirect:'/welcome',
     children:[
        {path:'/welcome',component: Welcome},
-       {path:'/users',component: User}
+       {path:'/users',component: User},
+       {path:'/rights',component: Rights}, {path:'/roles',component: Roles}
     ]
   }
 ]
