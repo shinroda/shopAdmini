@@ -10,3 +10,8 @@ html,body,#app{
 #app{
   min-width: 1366px;
 }
+.el-popconfirm {
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0px 0px 2px #888;
+}
