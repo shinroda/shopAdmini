@@ -15,3 +15,13 @@ html,body,#app{
   padding: 10px;
   box-shadow: 0px 0px 2px #888;
 }
+.el-step__title{
+  font-size: 13px;
+} 
+
+.el-cascader-menu{
+  height: 300px;
+}
+.ql-editor{
+  min-height: 300px;
+}

@@ -127,6 +127,7 @@
               checkStrictly: true,
               label:'cat_name',
               value:'cat_id',
+              children:'children'
           },
           //选中的父级的key
           cateKeys:[]

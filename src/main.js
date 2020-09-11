@@ -2,8 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
+// 富文本插件
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor)
 
-import './assets/css/golbal.css'
+import './assets/css/global.css'
+import './assets/js/global.js'
 
 import TreeTable from 'vue-table-with-tree-grid'
 
@@ -18,6 +25,8 @@ axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/'
 Vue.prototype.$http = axios
 
 Vue.component('tree-table',TreeTable)
+
+
 
 Vue.config.productionTip = false
 
